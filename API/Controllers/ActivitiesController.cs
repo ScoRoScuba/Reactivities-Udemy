@@ -5,6 +5,7 @@ using Application.Activities;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 
 namespace API.Controllers
 {
@@ -32,7 +33,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> EditActivity(Guid id, Activity activity)
         {
             activity.Id = id;
@@ -42,7 +43,7 @@ namespace API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(Guid id)
         {   
             var result = await _mediator.Send(new Delete.Command(id));
