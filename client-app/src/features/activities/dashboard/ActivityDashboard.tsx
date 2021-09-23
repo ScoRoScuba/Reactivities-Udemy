@@ -5,6 +5,7 @@ import ActivityList from "./ActivityList";
 
 import {observer} from 'mobx-react-lite';
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import ActivityFilters from "./ActivityFilters";
 
 export default observer ( function ActivityDashboard(){
 
@@ -22,8 +23,8 @@ export default observer ( function ActivityDashboard(){
             <Grid.Column width='10'>
                 <ActivityList/>
             </Grid.Column>
-            <Grid.Column width='6'>
-                <h2>Activity Filter</h2>
+            <Grid.Column width='6'>                
+                <ActivityFilters/>
             </Grid.Column>
         </Grid>
     )
