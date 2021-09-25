@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using Application.Core;
 using MediatR;
 
 namespace API.Controllers
@@ -11,13 +7,26 @@ namespace API.Controllers
     
     [ApiController]
     [Route("api/[controller]")]
-    public class BAseApiController : ControllerBase
+    public class BaseApiController : ControllerBase
     {
         protected readonly IMediator _mediator;
 
-        public BAseApiController(IMediator mediator)
+        public BaseApiController(IMediator mediator)
         {
             _mediator = mediator;
         }
+
+        protected ActionResult HandleResult<T>(Result<T> result)
+        {
+            if (result == null)
+                return NotFound();
+            if (result.IsSuccess && result.Value != null)
+                return Ok(result.Value);
+            if (result.IsSuccess && result.Value == null)
+                return NotFound();
+
+            return BadRequest(result.Error);
+        }
+
     }
 }

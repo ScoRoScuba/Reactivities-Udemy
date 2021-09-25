@@ -1,36 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Microsoft.AspNetCore.Cors;
 
 namespace API.Controllers
 {
-    public class ActivitiesController : BAseApiController
+    public class ActivitiesController : BaseApiController
     {
         public ActivitiesController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> GetActivities()
+        public async Task<IActionResult> GetActivities()
         {
-            return await _mediator.Send(new List.Query());
+            var result = await _mediator.Send(new List.Query());
+            return HandleResult(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Activity>> GetActivity(Guid id)
+        public async Task<IActionResult> GetActivity(Guid id)
         {
-            return await _mediator.Send(new Details.Query(id));
+            var result = await _mediator.Send(new Details.Query(id));
+            return HandleResult(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateActivity(Activity activity)
         {
             var result =await _mediator.Send(new Create.Command(activity));
-
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPut("{id}")]
@@ -39,16 +38,14 @@ namespace API.Controllers
             activity.Id = id;
 
             var result = await _mediator.Send(new Edit.Command(activity));
-
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(Guid id)
         {   
             var result = await _mediator.Send(new Delete.Command(id));
-
-            return Ok(result);
+            return HandleResult(result);
         }
     }
 }
