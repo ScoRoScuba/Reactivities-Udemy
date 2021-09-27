@@ -5,7 +5,8 @@ import { useField } from "formik";
 interface Props {
     placeholder: string;
     name: string;
-    label?: string 
+    type?: string;
+    label?: string;    
 }
 
 export default function MyTextInput(props: Props) {

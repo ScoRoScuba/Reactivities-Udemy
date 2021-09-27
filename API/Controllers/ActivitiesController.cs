@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     public class ActivitiesController : BaseApiController
     {
         public ActivitiesController(IMediator mediator) : base(mediator) { }
