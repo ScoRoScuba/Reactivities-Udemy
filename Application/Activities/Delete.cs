@@ -32,7 +32,7 @@ namespace Application.Activities
             {
                 var activity = await _dataContext.Activities.FindAsync(request.Id);
 
-//                if (activity == null) return null;
+                if (activity == null) return null;
 
                 _dataContext.Remove(activity);
 

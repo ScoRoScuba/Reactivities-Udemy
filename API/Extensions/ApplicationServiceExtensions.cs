@@ -1,11 +1,15 @@
 ﻿using Application.Activities;
 using Application.Core;
 using Application.Interfaces;
+using Application.Photos;
+using CloudinaryDotNet;
+using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Persistance;
 
@@ -36,8 +40,18 @@ namespace API.Extensions
 
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+
+            services.AddSingleton(srv =>
+            {
+                var config = srv.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+                var account = new Account(config.CloudName, config.ApiKey, config.ApiSecret);
+
+                return new Cloudinary(account);
+            });
 
             return services;
         }
