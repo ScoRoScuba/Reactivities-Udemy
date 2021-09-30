@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Application.Profiles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetProfile(string username)
         {
             var result = await _mediator.Send(new Details.Query(username));
+            return HandleResult(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> EditActivity(Profile profile)
+        {
+            var result = await _mediator.Send(new Edit.Command(profile));
+
             return HandleResult(result);
         }
     }

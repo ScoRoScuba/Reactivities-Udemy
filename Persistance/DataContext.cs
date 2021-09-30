@@ -24,6 +24,7 @@ namespace Persistance
                 .HasOne(u => u.Activity)
                 .WithMany(a => a.Attendees)
                 .HasForeignKey(aa => aa.ActivityId);
+
         }
 
         public DbSet<Activity> Activities { get; set; }

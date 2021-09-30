@@ -65,4 +65,10 @@ export default class UserStore{
             this.user.image = image
         }    
     }
+
+    setDisplayName = async (displayName: string) => {
+        if(this.user)        {
+            this.user.displayName = displayName
+        }
+    }
 }
