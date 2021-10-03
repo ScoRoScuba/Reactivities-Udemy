@@ -13,10 +13,10 @@ namespace API.Controllers
         public ActivitiesController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<IActionResult> GetActivities()
+        public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
-            var result = await _mediator.Send(new List.Query());
-            return HandleResult(result);
+            var result = await _mediator.Send(new List.Query(param));
+            return HandlePagedResult(result);
         }
 
         [HttpGet("{id}")]
