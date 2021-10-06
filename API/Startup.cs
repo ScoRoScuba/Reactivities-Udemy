@@ -67,13 +67,10 @@ namespace API
             }
             else
             {
-                app.Use( async (context, next)  =>
-                {
-                    context.Response.Headers.Add( "Strict-Transport-Security", "max-age=31536000");
-                    await next.Invoke();
-
-                });
+                app.UseHsts();
             }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
