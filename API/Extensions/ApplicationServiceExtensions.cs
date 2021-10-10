@@ -69,6 +69,7 @@ namespace API.Extensions
                     .WithOrigins("http://localhost:3000")
                     .AllowAnyMethod()
                     .AllowCredentials()
+                    .WithExposedHeaders("WWW-Authenticate")
                     .AllowAnyHeader());
             });
 
